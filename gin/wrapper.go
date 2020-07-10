@@ -5,16 +5,16 @@ import "github.com/gin-gonic/gin"
 type HandlerFunc func(c *gin.Context) error
 
 // api错误的结构体
-type APIException struct {
+type APIError struct {
 	Code int    `json:"-"`
 	Msg  string `json:"msg"`
 }
 
-func (e *APIException) Error() string {
+func (e *APIError) Error() string {
 	return e.Msg
 }
 
-func Wrapper(handler HandlerFunc) func(c *gin.Context) {
+func ErrorWrapper(handler HandlerFunc) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var (
 			err error
@@ -22,8 +22,8 @@ func Wrapper(handler HandlerFunc) func(c *gin.Context) {
 
 		err = handler(c)
 		if err != nil {
-			var apiException *APIException
-			if h, ok := err.(*APIException); ok {
+			var apiException *APIError
+			if h, ok := err.(*APIError); ok {
 				apiException = h
 			} else {
 				apiException = ServerError()
