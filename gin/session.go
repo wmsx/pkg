@@ -54,19 +54,21 @@ func AuthWrapper(handler g.HandlerFunc) g.HandlerFunc {
 		var (
 			s   *sessions.Session
 			err error
+			id  int64
+			ok  bool
 		)
 		if s, err = store.Get(c.Request, SessionKey); err != nil {
 			return
 		}
-		if s == nil {
+
+		if id, ok = s.Values["id"].(int64); !ok || id == 0 {
 			c.JSON(http.StatusOK, Response{
 				Code:    UnauthorizedErrorCode,
 				Message: "未登录",
 			})
 			return
 		}
+		c.Header("id", string(id))
 		handler(c)
 	}
 }
-
-
