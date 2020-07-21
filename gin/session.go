@@ -68,7 +68,7 @@ func AuthWrapper(handler g.HandlerFunc) g.HandlerFunc {
 			})
 			return
 		}
-		c.Header("id", string(id))
+		c.Request.Header.Set("id", string(id))
 		handler(c)
 	}
 }
