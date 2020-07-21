@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/rbcervilla/redisstore"
 	"net/http"
+	"strconv"
 )
 
 const (
@@ -68,7 +69,7 @@ func AuthWrapper(handler g.HandlerFunc) g.HandlerFunc {
 			})
 			return
 		}
-		c.Request.Header.Set("id", string(id))
+		c.Request.Header.Set("uid", strconv.FormatInt(id, 10))
 		handler(c)
 	}
 }
