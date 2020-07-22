@@ -59,6 +59,10 @@ func AuthWrapper(handler g.HandlerFunc) g.HandlerFunc {
 			ok  bool
 		)
 		if s, err = store.Get(c.Request, SessionKey); err != nil {
+			c.JSON(http.StatusOK, Response{
+				Code:    UnauthorizedErrorCode,
+				Message: "未登录",
+			})
 			return
 		}
 
