@@ -22,7 +22,7 @@ func SetUp(addr, password string) (err error) {
 		MaxAge:   86400 * 60,
 		Secure:   false,
 		HttpOnly: true,
-		Domain:   "api.menger.com",
+		Domain:   "api.wemeng.com",
 	})
 	return nil
 }
