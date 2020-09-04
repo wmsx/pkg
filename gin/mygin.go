@@ -8,10 +8,10 @@ import (
 
 func SetUp(addr, password string) (err error) {
 	client := redis.NewClient(&redis.Options{
-		Addr: addr,
+		Addr:     addr,
 		Password: password,
 		PoolSize: 2,
-		DB: 1,
+		DB:       1,
 	})
 	// New default RedisStore
 	if store, err = redisstore.NewRedisStore(client); err != nil {
@@ -22,6 +22,7 @@ func SetUp(addr, password string) (err error) {
 		MaxAge:   86400 * 60,
 		Secure:   false,
 		HttpOnly: true,
+		Domain:   "api.menger.com",
 	})
 	return nil
 }
